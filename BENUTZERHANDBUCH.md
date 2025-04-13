@@ -9,6 +9,25 @@ Willkommen bei IronPulse Fitness, Ihrer persönlichen Fitness-Tracking-Webanwend
 Die IronPulse Fitness App ist unter folgender URL verfügbar:
 [https://nick8619.github.io/ironpulse-fitness/](https://nick8619.github.io/ironpulse-fitness/)
 
+## Benutzerverwaltung
+
+### Registrierung:
+1. Besuchen Sie die App-URL
+2. Klicken Sie auf der Login-Seite auf "Registrieren"
+3. Geben Sie Ihren Namen, einen Benutzernamen und ein Passwort ein
+4. Bestätigen Sie Ihr Passwort
+5. Klicken Sie auf "Registrieren"
+6. Nach erfolgreicher Registrierung werden Sie automatisch angemeldet
+
+### Anmeldung:
+1. Besuchen Sie die App-URL
+2. Geben Sie Ihren Benutzernamen und Ihr Passwort ein
+3. Klicken Sie auf "Anmelden"
+
+### Abmeldung:
+1. Klicken Sie auf Ihren Benutzernamen in der oberen rechten Ecke
+2. Wählen Sie "Abmelden" aus dem Dropdown-Menü
+
 ## Hauptfunktionen
 
 ### 1. Workout-Tracking
@@ -27,6 +46,31 @@ Die IronPulse Fitness App ist unter folgender URL verfügbar:
 #### Workout-Historie anzeigen:
 - Auf der Startseite werden Ihre letzten Workouts angezeigt
 - Klicken Sie auf ein Workout, um die Details anzuzeigen
+
+#### Bestehende Workouts bearbeiten:
+1. Klicken Sie auf der Startseite auf ein Workout, um die Details anzuzeigen
+2. Sie können nun:
+   - Bestehende Sets bearbeiten: Klicken Sie auf "Edit" neben einem Set
+   - Neue Sets zu einer Übung hinzufügen: Klicken Sie auf "+ Set" neben einer Übung
+   - Neue Übungen zum Workout hinzufügen: Klicken Sie auf "+ Übung hinzufügen" am Ende der Seite
+
+#### Sets bearbeiten:
+1. Klicken Sie auf "Edit" neben einem Set
+2. Ändern Sie die Anzahl der Wiederholungen und/oder das Gewicht
+3. Klicken Sie auf "Speichern", um die Änderungen zu übernehmen
+4. Oder klicken Sie auf "Löschen", um das Set zu entfernen
+
+#### Neue Sets hinzufügen:
+1. Klicken Sie auf "+ Set" neben einer Übung
+2. Geben Sie die Anzahl der Wiederholungen und das Gewicht ein
+3. Klicken Sie auf "Hinzufügen"
+
+#### Neue Übungen zu einem bestehenden Workout hinzufügen:
+1. Klicken Sie auf "+ Übung hinzufügen" am Ende der Workout-Detailseite
+2. Geben Sie den Namen der neuen Übung ein
+3. Fügen Sie Sets hinzu, indem Sie auf "+ Set hinzufügen" klicken
+4. Geben Sie für jedes Set die Anzahl der Wiederholungen und das Gewicht ein
+5. Klicken Sie auf "Übung hinzufügen"
 
 ### 2. Fortschrittsverfolgung
 
@@ -74,10 +118,18 @@ Um Erinnerungen für Ihre Workouts einzurichten:
 ## Datenspeicherung
 
 Alle Ihre Daten werden lokal in Ihrem Browser gespeichert. Das bedeutet:
-- Keine Anmeldung oder Registrierung erforderlich
 - Ihre Daten bleiben privat und werden nicht auf externen Servern gespeichert
 - Sie können die App offline nutzen, nachdem sie einmal geladen wurde
 - Wenn Sie den Browser-Cache leeren, werden Ihre Daten gelöscht
+- Jeder Benutzer hat seine eigenen Daten, die von anderen Benutzern getrennt sind
+
+## Mehrbenutzer-Funktionalität
+
+Die App unterstützt mehrere Benutzer auf demselben Gerät:
+- Jeder Benutzer muss sich mit eigenen Anmeldedaten registrieren
+- Benutzer können sich abmelden und andere Benutzer können sich anmelden
+- Jeder Benutzer hat Zugriff auf seine eigenen Workouts, Statistiken und Erinnerungen
+- Benutzer können über die Gruppenfunktion miteinander interagieren
 
 ## Tipps zur Nutzung
 
@@ -85,12 +137,14 @@ Alle Ihre Daten werden lokal in Ihrem Browser gespeichert. Das bedeutet:
 - **Gruppenmotivation**: Nutzen Sie die Gruppenfunktion, um sich gegenseitig zu motivieren
 - **Konsistente Benennung**: Verwenden Sie konsistente Namen für Übungen, um die Fortschrittsverfolgung zu verbessern
 - **Erinnerungen**: Richten Sie Erinnerungen ein, um Ihre Trainingsroutine beizubehalten
+- **Workout-Bearbeitung**: Nutzen Sie die Möglichkeit, bestehende Workouts zu bearbeiten, um Ihre Trainingshistorie genau zu halten
 
 ## Fehlerbehebung
 
 - **Daten werden nicht gespeichert**: Stellen Sie sicher, dass Sie keine Erweiterungen verwenden, die das lokale Speichern blockieren
 - **Seite lädt nicht**: Aktualisieren Sie die Seite oder löschen Sie den Browser-Cache
 - **Funktionen reagieren nicht**: Stellen Sie sicher, dass JavaScript in Ihrem Browser aktiviert ist
+- **Anmeldeprobleme**: Wenn Sie Ihr Passwort vergessen haben, müssen Sie sich leider neu registrieren, da die Daten nur lokal gespeichert werden
 
 ## Kontakt
 
