@@ -34,18 +34,27 @@ Die IronPulse Fitness App ist unter folgender URL verfügbar:
 
 #### Neues Workout erstellen:
 1. Klicken Sie auf der Startseite auf "Start Workout"
-2. Geben Sie einen Namen für Ihr Workout ein (z.B. "Push Day", "Leg Day")
-3. Klicken Sie auf "+ Übung hinzufügen", um eine Übung hinzuzufügen
-4. Geben Sie den Namen der Übung ein
-5. Fügen Sie Sets hinzu, indem Sie auf "+ Set hinzufügen" klicken
-6. Geben Sie für jedes Set die Anzahl der Wiederholungen und das Gewicht ein
-7. Klicken Sie auf "Übung speichern"
-8. Wiederholen Sie die Schritte 3-7 für weitere Übungen
-9. Klicken Sie auf "Workout speichern", um das gesamte Workout abzuschließen
+2. Wählen Sie einen Workout-Typ aus der Dropdown-Liste (Pushday, Pullday, Legday, Full Body, etc.)
+3. Geben Sie optional einen individuellen Namen für Ihr Workout ein
+4. Klicken Sie auf "+ Übung hinzufügen", um eine Übung hinzuzufügen
+5. Geben Sie den Namen der Übung ein
+6. Fügen Sie Sets hinzu, indem Sie auf "+ Set hinzufügen" klicken
+7. Geben Sie für jedes Set die Anzahl der Wiederholungen und das Gewicht ein
+8. Klicken Sie auf "Übung speichern"
+9. Wiederholen Sie die Schritte 4-8 für weitere Übungen
+10. Klicken Sie auf "Workout speichern", um das gesamte Workout abzuschließen
 
 #### Workout-Historie anzeigen:
-- Auf der Startseite werden Ihre letzten Workouts angezeigt
+- Auf der Startseite werden Ihre letzten Workouts mit Datum und Typ angezeigt
 - Klicken Sie auf ein Workout, um die Details anzuzeigen
+
+#### Workout wiederholen:
+1. Klicken Sie auf der Startseite auf ein Workout, um die Details anzuzeigen
+2. Klicken Sie auf "Workout wiederholen"
+3. Überprüfen Sie den vorausgewählten Workout-Typ und Namen
+4. Passen Sie die Wiederholungen und Gewichte für jedes Set an
+5. Fügen Sie bei Bedarf weitere Sets hinzu oder entfernen Sie Sets
+6. Klicken Sie auf "Workout speichern", um das wiederholte Workout als neues Workout zu speichern
 
 #### Bestehende Workouts bearbeiten:
 1. Klicken Sie auf der Startseite auf ein Workout, um die Details anzuzeigen
@@ -75,6 +84,7 @@ Die IronPulse Fitness App ist unter folgender URL verfügbar:
 ### 2. Fortschrittsverfolgung
 
 Die App erkennt automatisch Fortschritte bei Ihren Übungen:
+- Fortschritte werden jetzt basierend auf dem Vergleich gleicher Workout-Typen berechnet
 - Wenn Sie bei einer Übung mehr Gewicht oder mehr Wiederholungen schaffen als beim letzten Mal, wird dies als "Progress" markiert
 - Fortschritte werden mit einem grünen Häkchen neben der Übung angezeigt
 - Auf der Startseite sehen Sie eine Zusammenfassung Ihres Gesamtfortschritts
@@ -84,9 +94,14 @@ Die App erkennt automatisch Fortschritte bei Ihren Übungen:
 Um detaillierte Statistiken zu Ihren Workouts anzuzeigen:
 1. Klicken Sie in der unteren Navigationsleiste auf "Stats"
 2. Hier sehen Sie Grafiken zu:
-   - Fortschritt nach Übung
+   - Fortschritt nach Workout-Typ (Pushday, Pullday, Legday, etc.)
    - Workout-Häufigkeit
    - Gesamtfortschritt über die Zeit
+
+Die verbesserte Statistik ermöglicht es Ihnen:
+- Fortschritte zwischen gleichen Workout-Typen zu vergleichen
+- Genauere Analysen Ihrer Leistungsentwicklung zu erhalten
+- Stärken und Schwächen in verschiedenen Trainingsbereichen zu identifizieren
 
 ### 4. Gruppenfunktionalität
 
@@ -115,6 +130,36 @@ Um Erinnerungen für Ihre Workouts einzurichten:
 4. Wählen Sie das Intervall (täglich, alle 2 Tage, wöchentlich, etc.)
 5. Klicken Sie auf "Erinnerung speichern"
 
+## Neue Funktionen (April 2025)
+
+### Workout-Datum und Details
+- Das Datum wird jetzt prominent in der Workout-Übersicht angezeigt
+- Detaillierte Ansicht für jedes Workout mit allen Übungen, Sets und Gewichten
+- Verbesserte Übersichtlichkeit durch klare Strukturierung der Workout-Informationen
+
+### Repeat Workout
+- Wiederholen Sie frühere Workouts mit neuen Werten
+- Behalten Sie die Struktur Ihrer bewährten Trainingseinheiten bei
+- Sparen Sie Zeit bei der Erstellung ähnlicher Workouts
+- Verfolgen Sie Ihren Fortschritt über mehrere Durchläufe desselben Workouts
+
+### Workout-Typen
+- Kategorisieren Sie Ihre Workouts nach Typen:
+  - Pushday
+  - Pullday
+  - Legday
+  - Full Body
+  - Upper Body
+  - Lower Body
+  - Cardio
+- Verbesserte Vergleichbarkeit zwischen ähnlichen Trainingseinheiten
+- Genauere Fortschrittsberechnung durch Vergleich gleicher Workout-Typen
+
+### Verbesserte Statistik
+- Fortschrittsberechnung basierend auf dem Vergleich gleicher Workout-Typen
+- Detaillierte Analysen Ihrer Leistungsentwicklung in verschiedenen Trainingsbereichen
+- Visualisierung des Fortschritts nach Workout-Typ
+
 ## Datenspeicherung
 
 Alle Ihre Daten werden lokal in Ihrem Browser gespeichert. Das bedeutet:
@@ -133,6 +178,8 @@ Die App unterstützt mehrere Benutzer auf demselben Gerät:
 
 ## Tipps zur Nutzung
 
+- **Workout-Typen**: Wählen Sie konsequent den richtigen Workout-Typ für genauere Statistiken
+- **Repeat Workout**: Nutzen Sie die Wiederholungsfunktion für regelmäßige Trainingseinheiten
 - **Regelmäßige Nutzung**: Tragen Sie alle Ihre Workouts ein, um genaue Fortschrittsstatistiken zu erhalten
 - **Gruppenmotivation**: Nutzen Sie die Gruppenfunktion, um sich gegenseitig zu motivieren
 - **Konsistente Benennung**: Verwenden Sie konsistente Namen für Übungen, um die Fortschrittsverfolgung zu verbessern
