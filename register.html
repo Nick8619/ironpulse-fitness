@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IronPulse Fitness - Registrieren</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        .register-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .register-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .register-logo img {
+            height: 60px;
+            margin-bottom: 15px;
+        }
+        
+        .register-form {
+            margin-top: 20px;
+        }
+        
+        .register-options {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .register-options a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        .register-options a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            color: #ff5252;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-logo">
+            <img src="logo.svg" alt="IronPulse Logo">
+            <h1>IRONPULSE</h1>
+        </div>
+        
+        <div class="register-form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Dein Name">
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Benutzername</label>
+                <input type="text" id="username" placeholder="Wähle einen Benutzernamen">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Passwort</label>
+                <input type="password" id="password" placeholder="Wähle ein Passwort">
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm-password">Passwort bestätigen</label>
+                <input type="password" id="confirm-password" placeholder="Passwort wiederholen">
+            </div>
+            
+            <button id="register-btn" class="btn-primary">Registrieren</button>
+            
+            <div id="error-message" class="error-message">
+                Bitte fülle alle Felder aus
+            </div>
+        </div>
+        
+        <div class="register-options">
+            <p>Bereits ein Konto? <a href="login.html">Anmelden</a></p>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const registerBtn = document.getElementById('register-btn');
+            const nameInput = document.getElementById('name');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirm-password');
+            const errorMessage = document.getElementById('error-message');
+            
+            // Check if user is already logged in
+            const currentUser = localStorage.getItem('ironpulse_current_user');
+            if (currentUser) {
+                window.location.href = 'index.html';
+            }
+            
+            registerBtn.addEventListener('click', function() {
+                const name = nameInput.value.trim();
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
+                const confirmPassword = confirmPasswordInput.value.trim();
+                
+                // Validate inputs
+                if (!name || !username || !password || !confirmPassword) {
+                    errorMessage.textContent = 'Bitte fülle alle Felder aus';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    errorMessage.textContent = 'Passwörter stimmen nicht überein';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                
+                // Get users from localStorage
+                let users = JSON.parse(localStorage.getItem('ironpulse_users') || '[]');
+                
+                // Check if username already exists
+                if (users.some(u => u.username === username)) {
+                    errorMessage.textContent = 'Benutzername bereits vergeben';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                
+                // Create new user
+                const newUser = {
+                    id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
+                    name: name,
+                    username: username,
+                    password: password,
+                    workouts: []
+                };
+                
+                // Add user to users array
+                users.push(newUser);
+                
+                // Save users to localStorage
+                localStorage.setItem('ironpulse_users', JSON.stringify(users));
+                
+                // Store current user in localStorage (without password)
+                const currentUser = {
+                    id: newUser.id,
+                    username: newUser.username,
+                    name: newUser.name
+                };
+                
+                localStorage.setItem('ironpulse_current_user', JSON.stringify(currentUser));
+                
+                // Redirect to main page
+                window.location.href = 'index.html';
+            });
+            
+            // Hide error message when user starts typing
+            const inputs = [nameInput, usernameInput, passwordInput, confirmPasswordInput];
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    errorMessage.style.display = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

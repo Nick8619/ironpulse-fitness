@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IronPulse Fitness - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .login-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-logo img {
+            height: 60px;
+            margin-bottom: 15px;
+        }
+        
+        .login-form {
+            margin-top: 20px;
+        }
+        
+        .login-options {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .login-options a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        .login-options a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            color: #ff5252;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-logo">
+            <img src="logo.svg" alt="IronPulse Logo">
+            <h1>IRONPULSE</h1>
+        </div>
+        
+        <div class="login-form">
+            <div class="form-group">
+                <label for="username">Benutzername</label>
+                <input type="text" id="username" placeholder="Dein Benutzername">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Passwort</label>
+                <input type="password" id="password" placeholder="Dein Passwort">
+            </div>
+            
+            <button id="login-btn" class="btn-primary">Anmelden</button>
+            
+            <div id="error-message" class="error-message">
+                Ungültiger Benutzername oder Passwort
+            </div>
+        </div>
+        
+        <div class="login-options">
+            <p>Noch kein Konto? <a href="register.html">Registrieren</a></p>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginBtn = document.getElementById('login-btn');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const errorMessage = document.getElementById('error-message');
+            
+            // Check if user is already logged in
+            const currentUser = localStorage.getItem('ironpulse_current_user');
+            if (currentUser) {
+                window.location.href = 'index.html';
+            }
+            
+            loginBtn.addEventListener('click', function() {
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
+                
+                if (!username || !password) {
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                
+                // Get users from localStorage
+                let users = JSON.parse(localStorage.getItem('ironpulse_users') || '[]');
+                
+                // Find user
+                const user = users.find(u => u.username === username && u.password === password);
+                
+                if (user) {
+                    // Store current user in localStorage (without password)
+                    const currentUser = {
+                        id: user.id,
+                        username: user.username,
+                        name: user.name
+                    };
+                    
+                    localStorage.setItem('ironpulse_current_user', JSON.stringify(currentUser));
+                    
+                    // Redirect to main page
+                    window.location.href = 'index.html';
+                } else {
+                    errorMessage.style.display = 'block';
+                }
+            });
+            
+            // Hide error message when user starts typing
+            usernameInput.addEventListener('input', function() {
+                errorMessage.style.display = 'none';
+            });
+            
+            passwordInput.addEventListener('input', function() {
+                errorMessage.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
