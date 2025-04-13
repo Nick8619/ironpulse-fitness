@@ -7,6 +7,17 @@ let reminders = [];
 let users = [];
 let currentUser = null;
 
+// Workout types
+const workoutTypes = [
+    "Pushday",
+    "Pullday",
+    "Legday",
+    "Full Body",
+    "Upper Body",
+    "Lower Body",
+    "Cardio"
+];
+
 // DOM Elements
 const screens = document.querySelectorAll('.screen');
 const navButtons = document.querySelectorAll('.nav-btn');
@@ -93,9 +104,9 @@ function saveData() {
 function addSampleData() {
     // Sample workouts
     workouts = [
-        { id: 1, name: 'Leg day', date: '2025-04-22', userId: currentUser.id },
-        { id: 2, name: 'Push day', date: '2025-04-19', userId: currentUser.id },
-        { id: 3, name: 'Pull day', date: '2025-04-16', userId: currentUser.id }
+        { id: 1, name: 'Leg day', type: 'Legday', date: '2025-04-22', userId: currentUser.id },
+        { id: 2, name: 'Push day', type: 'Pushday', date: '2025-04-19', userId: currentUser.id },
+        { id: 3, name: 'Pull day', type: 'Pullday', date: '2025-04-16', userId: currentUser.id }
     ];
     
     // Sample exercises
@@ -241,12 +252,14 @@ function viewWorkoutDetails(workoutId) {
             </div>
             
             <div class="workout-date-detail">${formattedDate}</div>
+            <div class="workout-type-detail">${workout.type || 'Kein Typ'}</div>
             
             <div id="workout-exercises">
                 ${exercisesHtml}
             </div>
             
             <button id="add-exercise-to-workout-btn" class="btn-secondary" data-workout-id="${workoutId}">+ Übung hinzufügen</button>
+            <button id="repeat-workout-btn" class="btn-primary" data-workout-id="${workoutId}">Workout wiederholen</button>
         </div>
     `;
     
@@ -277,11 +290,272 @@ function viewWorkoutDetails(workoutId) {
         openAddExerciseToWorkoutModal(workoutId);
     });
     
+    document.getElementById('repeat-workout-btn').addEventListener('click', () => {
+        repeatWorkout(workoutId);
+    });
+    
     // Add back button functionality
     detailScreen.querySelector('.back-btn').addEventListener('click', () => {
         document.querySelector('main').removeChild(detailScreen);
         showScreen('home-screen');
     });
+}
+
+// Repeat workout
+function repeatWorkout(workoutId) {
+    const originalWorkout = workouts.find(w => w.id === workoutId);
+    if (!originalWorkout) return;
+    
+    // Create a new workout screen with pre-filled exercises
+    const newWorkoutScreen = document.createElement('div');
+    newWorkoutScreen.id = 'repeat-workout-screen';
+    newWorkoutScreen.className = 'screen';
+    
+    // Get workout type options
+    let workoutTypeOptions = '';
+    workoutTypes.forEach(type => {
+        const selected = type === originalWorkout.type ? 'selected' : '';
+        workoutTypeOptions += `<option value="${type}" ${selected}>${type}</option>`;
+    });
+    
+    newWorkoutScreen.innerHTML = `
+        <div class="container">
+            <div class="screen-header">
+                <button class="back-btn">&larr;</button>
+                <h2>WORKOUT WIEDERHOLEN</h2>
+            </div>
+            
+            <div class="workout-form">
+                <div class="form-group">
+                    <label for="repeat-workout-type">Workout Typ</label>
+                    <select id="repeat-workout-type" required>
+                        ${workoutTypeOptions}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="repeat-workout-name">Workout Name</label>
+                    <input type="text" id="repeat-workout-name" value="${originalWorkout.name}" placeholder="z.B. Push Day, Leg Day...">
+                </div>
+                
+                <div id="repeat-exercises-container">
+                    <!-- Exercises will be added here -->
+                </div>
+                
+                <button id="save-repeat-workout-btn" class="btn-primary">Workout speichern</button>
+            </div>
+        </div>
+    `;
+    
+    // Add the screen to the DOM
+    document.querySelector('main').appendChild(newWorkoutScreen);
+    
+    // Show the screen
+    showScreen('repeat-workout-screen');
+    
+    // Get exercises from original workout
+    const workoutExercises = exercises.filter(e => e.workoutId === workoutId);
+    const exercisesContainer = document.getElementById('repeat-exercises-container');
+    
+    workoutExercises.forEach(exercise => {
+        const exerciseSets = sets.filter(s => s.exerciseId === exercise.id);
+        
+        const exerciseItem = document.createElement('div');
+        exerciseItem.className = 'exercise-item';
+        exerciseItem.dataset.originalId = exercise.id;
+        
+        let setsHtml = '';
+        exerciseSets.forEach((set, index) => {
+            setsHtml += `
+                <div class="set-form repeat-set-form">
+                    <div class="set-form-group">
+                        <label>Set ${index + 1}</label>
+                    </div>
+                    <div class="set-form-group">
+                        <label>Reps</label>
+                        <input type="number" class="repeat-set-reps" min="1" value="${set.reps}">
+                    </div>
+                    <div class="set-form-group">
+                        <label>Weight (kg)</label>
+                        <input type="number" class="repeat-set-weight" min="0" value="${set.weight}">
+                    </div>
+                    <button type="button" class="remove-repeat-set">&times;</button>
+                </div>
+            `;
+        });
+        
+        exerciseItem.innerHTML = `
+            <div class="exercise-header">
+                <span class="exercise-name">${exercise.name}</span>
+                <button type="button" class="remove-repeat-exercise">&times;</button>
+            </div>
+            <div class="repeat-sets-container">
+                ${setsHtml}
+            </div>
+            <button type="button" class="add-repeat-set-btn" data-exercise-index="${workoutExercises.indexOf(exercise)}">+ Set hinzufügen</button>
+        `;
+        
+        exercisesContainer.appendChild(exerciseItem);
+        
+        // Add event listener to remove exercise button
+        exerciseItem.querySelector('.remove-repeat-exercise').addEventListener('click', () => {
+            exerciseItem.remove();
+        });
+        
+        // Add event listeners to remove set buttons
+        exerciseItem.querySelectorAll('.remove-repeat-set').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.closest('.repeat-set-form').remove();
+                updateRepeatSetNumbers(exerciseItem);
+            });
+        });
+        
+        // Add event listener to add set button
+        exerciseItem.querySelector('.add-repeat-set-btn').addEventListener('click', () => {
+            addRepeatSet(exerciseItem);
+        });
+    });
+    
+    // Add back button functionality
+    newWorkoutScreen.querySelector('.back-btn').addEventListener('click', () => {
+        document.querySelector('main').removeChild(newWorkoutScreen);
+        showScreen('workout-detail-screen');
+    });
+    
+    // Add save button functionality
+    document.getElementById('save-repeat-workout-btn').addEventListener('click', () => {
+        saveRepeatedWorkout();
+    });
+}
+
+// Add a set to a repeated exercise
+function addRepeatSet(exerciseItem) {
+    const setsContainer = exerciseItem.querySelector('.repeat-sets-container');
+    const setIndex = setsContainer.children.length + 1;
+    
+    const setForm = document.createElement('div');
+    setForm.className = 'set-form repeat-set-form';
+    setForm.innerHTML = `
+        <div class="set-form-group">
+            <label>Set ${setIndex}</label>
+        </div>
+        <div class="set-form-group">
+            <label>Reps</label>
+            <input type="number" class="repeat-set-reps" min="1" value="8">
+        </div>
+        <div class="set-form-group">
+            <label>Weight (kg)</label>
+            <input type="number" class="repeat-set-weight" min="0" value="0">
+        </div>
+        <button type="button" class="remove-repeat-set">&times;</button>
+    `;
+    
+    setsContainer.appendChild(setForm);
+    
+    // Add event listener to remove button
+    setForm.querySelector('.remove-repeat-set').addEventListener('click', () => {
+        setForm.remove();
+        updateRepeatSetNumbers(exerciseItem);
+    });
+}
+
+// Update set numbers in repeated exercise
+function updateRepeatSetNumbers(exerciseItem) {
+    const setForms = exerciseItem.querySelectorAll('.repeat-set-form');
+    setForms.forEach((form, index) => {
+        form.querySelector('label').textContent = `Set ${index + 1}`;
+    });
+}
+
+// Save repeated workout
+function saveRepeatedWorkout() {
+    const workoutName = document.getElementById('repeat-workout-name').value.trim();
+    const workoutType = document.getElementById('repeat-workout-type').value;
+    
+    if (!workoutName) {
+        alert('Please enter a workout name');
+        return;
+    }
+    
+    if (!workoutType) {
+        alert('Please select a workout type');
+        return;
+    }
+    
+    const exerciseItems = document.querySelectorAll('#repeat-exercises-container .exercise-item');
+    
+    if (exerciseItems.length === 0) {
+        alert('Please add at least one exercise');
+        return;
+    }
+    
+    // Generate new IDs
+    const workoutId = workouts.length > 0 ? Math.max(...workouts.map(w => w.id)) + 1 : 1;
+    let exerciseId = exercises.length > 0 ? Math.max(...exercises.map(e => e.id)) + 1 : 1;
+    let setId = sets.length > 0 ? Math.max(...sets.map(s => s.id)) + 1 : 1;
+    
+    // Create workout
+    const newWorkout = {
+        id: workoutId,
+        name: workoutName,
+        type: workoutType,
+        date: new Date().toISOString().split('T')[0],
+        userId: currentUser.id
+    };
+    
+    workouts.push(newWorkout);
+    
+    // Create exercises and sets
+    exerciseItems.forEach(item => {
+        const exerciseName = item.querySelector('.exercise-name').textContent;
+        
+        const newExercise = {
+            id: exerciseId,
+            name: exerciseName,
+            workoutId: workoutId
+        };
+        
+        exercises.push(newExercise);
+        
+        const setForms = item.querySelectorAll('.repeat-set-form');
+        setForms.forEach(form => {
+            const reps = parseInt(form.querySelector('.repeat-set-reps').value) || 0;
+            const weight = parseInt(form.querySelector('.repeat-set-weight').value) || 0;
+            
+            const newSet = {
+                id: setId,
+                exerciseId: exerciseId,
+                reps: reps,
+                weight: weight,
+                completed: true
+            };
+            
+            sets.push(newSet);
+            setId++;
+        });
+        
+        exerciseId++;
+    });
+    
+    // Save data
+    saveData();
+    
+    // Update UI
+    renderWorkouts();
+    
+    // Remove repeat workout screen
+    const repeatWorkoutScreen = document.getElementById('repeat-workout-screen');
+    document.querySelector('main').removeChild(repeatWorkoutScreen);
+    
+    // Remove workout detail screen
+    const workoutDetailScreen = document.getElementById('workout-detail-screen');
+    document.querySelector('main').removeChild(workoutDetailScreen);
+    
+    // Go back to home screen
+    showScreen('home-screen');
+    
+    // Show success message
+    alert('Workout saved successfully!');
 }
 
 // Open modal to edit a set
@@ -712,14 +986,76 @@ function renderNextTraining() {
     }
 }
 
+// Calculate progress for a specific workout type
+function calculateWorkoutTypeProgress(workoutType) {
+    // Filter workouts by type and user
+    const typeWorkouts = workouts.filter(w => w.type === workoutType && w.userId === currentUser.id);
+    
+    // Sort by date (oldest first)
+    const sortedWorkouts = [...typeWorkouts].sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+    if (sortedWorkouts.length < 2) {
+        return 0; // Not enough workouts to calculate progress
+    }
+    
+    // Get the two most recent workouts
+    const recentWorkout = sortedWorkouts[sortedWorkouts.length - 1];
+    const previousWorkout = sortedWorkouts[sortedWorkouts.length - 2];
+    
+    // Get exercises for both workouts
+    const recentExercises = exercises.filter(e => e.workoutId === recentWorkout.id);
+    const previousExercises = exercises.filter(e => e.workoutId === previousWorkout.id);
+    
+    // Calculate total volume for each workout
+    let recentVolume = 0;
+    let previousVolume = 0;
+    
+    recentExercises.forEach(exercise => {
+        const exerciseSets = sets.filter(s => s.exerciseId === exercise.id);
+        exerciseSets.forEach(set => {
+            recentVolume += set.reps * set.weight;
+        });
+    });
+    
+    previousExercises.forEach(exercise => {
+        const exerciseSets = sets.filter(s => s.exerciseId === exercise.id);
+        exerciseSets.forEach(set => {
+            previousVolume += set.reps * set.weight;
+        });
+    });
+    
+    // Calculate percentage increase
+    if (previousVolume === 0) return 0;
+    
+    const percentageIncrease = ((recentVolume - previousVolume) / previousVolume) * 100;
+    return Math.round(percentageIncrease);
+}
+
 // Render progress chart
 function renderProgress() {
     const progressPercentageElement = document.getElementById('progress-percentage');
     if (!progressPercentageElement) return;
     
-    // This would normally calculate real progress based on workout history
-    // For demo purposes, we're using static data
-    progressPercentageElement.textContent = '+12% progress this week';
+    // Calculate overall progress across all workout types
+    let totalProgress = 0;
+    let typeCount = 0;
+    
+    // Get unique workout types for the current user
+    const userWorkouts = workouts.filter(w => w.userId === currentUser.id);
+    const workoutTypeSet = new Set(userWorkouts.map(w => w.type).filter(Boolean));
+    const uniqueWorkoutTypes = Array.from(workoutTypeSet);
+    
+    uniqueWorkoutTypes.forEach(type => {
+        const typeProgress = calculateWorkoutTypeProgress(type);
+        if (typeProgress !== 0) {
+            totalProgress += typeProgress;
+            typeCount++;
+        }
+    });
+    
+    const averageProgress = typeCount > 0 ? Math.round(totalProgress / typeCount) : 0;
+    
+    progressPercentageElement.textContent = `${averageProgress > 0 ? '+' : ''}${averageProgress}% progress this week`;
 }
 
 // Setup event listeners
@@ -961,9 +1297,15 @@ function saveExercise() {
 // Save workout
 function saveWorkout() {
     const workoutName = document.getElementById('workout-name').value.trim();
+    const workoutType = document.getElementById('workout-type').value;
     
     if (!workoutName) {
         alert('Please enter a workout name');
+        return;
+    }
+    
+    if (!workoutType) {
+        alert('Please select a workout type');
         return;
     }
     
@@ -983,6 +1325,7 @@ function saveWorkout() {
     const newWorkout = {
         id: workoutId,
         name: workoutName,
+        type: workoutType,
         date: new Date().toISOString().split('T')[0],
         userId: currentUser.id
     };
@@ -1032,6 +1375,7 @@ function saveWorkout() {
     
     // Reset form
     document.getElementById('workout-name').value = '';
+    document.getElementById('workout-type').selectedIndex = 0;
     document.getElementById('exercises-container').innerHTML = '';
     
     // Go back to home screen

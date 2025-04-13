@@ -54,6 +54,28 @@
         .user-dropdown-item:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
+        
+        .workout-date-detail {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .workout-type-detail {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        #repeat-workout-btn {
+            margin-top: 20px;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -120,7 +142,21 @@
                     
                     <div class="workout-form">
                         <div class="form-group">
-                            <label for="workout-name">Workout Name</label>
+                            <label for="workout-type">Workout Typ</label>
+                            <select id="workout-type" required>
+                                <option value="">Bitte wählen...</option>
+                                <option value="Pushday">Pushday</option>
+                                <option value="Pullday">Pullday</option>
+                                <option value="Legday">Legday</option>
+                                <option value="Full Body">Full Body</option>
+                                <option value="Upper Body">Upper Body</option>
+                                <option value="Lower Body">Lower Body</option>
+                                <option value="Cardio">Cardio</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="workout-name">Workout Name (optional)</label>
                             <input type="text" id="workout-name" placeholder="z.B. Push Day, Leg Day...">
                         </div>
                         
@@ -140,8 +176,8 @@
                     <h2>Statistiken</h2>
                     
                     <div class="card">
-                        <h3>Fortschritt nach Übung</h3>
-                        <div id="exercise-progress" class="stats-chart">
+                        <h3>Fortschritt nach Workout-Typ</h3>
+                        <div id="workout-type-progress" class="stats-chart">
                             <!-- Statistiken werden hier dynamisch eingefügt -->
                         </div>
                     </div>
