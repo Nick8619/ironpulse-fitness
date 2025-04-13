@@ -1,0 +1,605 @@
+/* Global Styles */
+:root {
+    --background-color: #0A0F1C;
+    --card-background: #111936;
+    --accent-color: #00BFD8;
+    --success-color: #00E676;
+    --text-color: #FFFFFF;
+    --text-secondary: #B0B0B0;
+    --border-radius: 12px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    background-color: var(--background-color);
+    padding: 15px 20px;
+    box-shadow: var(--shadow);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.logo h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+/* Cards */
+.card {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+/* Buttons */
+.btn-primary, .btn-secondary {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: var(--background-color);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+}
+
+.btn-primary:hover {
+    background-color: #00a8c0;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(0, 191, 216, 0.1);
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--card-background);
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 12px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.nav-btn svg {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+}
+
+.nav-btn.active {
+    color: var(--accent-color);
+}
+
+/* Screens */
+.screen {
+    display: none;
+    padding-bottom: 70px; /* Space for navigation */
+}
+
+.screen.active {
+    display: block;
+}
+
+.screen-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.screen-header h2 {
+    margin-left: 15px;
+}
+
+/* Home Screen */
+.workout-list {
+    margin-top: 15px;
+}
+
+.workout-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.workout-item:last-child {
+    border-bottom: none;
+}
+
+.workout-info h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.workout-date {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.progress-indicator {
+    color: var(--success-color);
+    display: flex;
+    align-items: center;
+}
+
+.progress-indicator svg {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+
+.reminder {
+    margin-bottom: 20px;
+}
+
+.reminder p {
+    margin-bottom: 5px;
+}
+
+#next-workout-name {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#next-workout-date {
+    color: var(--text-secondary);
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+#progress-percentage {
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+.progress-chart {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 100px;
+}
+
+.bar-container {
+    width: 30%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.bar {
+    width: 100%;
+    background-color: var(--accent-color);
+    border-radius: 5px 5px 0 0;
+}
+
+/* New Workout Screen */
+.workout-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.form-group input::placeholder, .form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#exercises-container {
+    margin-bottom: 20px;
+}
+
+.exercise-item {
+    background-color: rgba(0, 191, 216, 0.1);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.exercise-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.exercise-name {
+    font-weight: 600;
+}
+
+.remove-exercise {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.sets-list {
+    margin-top: 10px;
+}
+
+.set-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.set-item:last-child {
+    border-bottom: none;
+}
+
+.set-number {
+    font-weight: 500;
+}
+
+.set-details {
+    color: var(--text-secondary);
+}
+
+/* Stats Screen */
+.stats-chart {
+    height: 200px;
+    margin-top: 15px;
+}
+
+/* Groups Screen */
+#groups-list {
+    margin-bottom: 20px;
+}
+
+.group-item {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: var(--shadow);
+}
+
+.group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.group-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.member-count {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.group-description {
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+.member-list {
+    margin-top: 15px;
+}
+
+.member-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.member-item:last-child {
+    border-bottom: none;
+}
+
+.member-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.member-name {
+    flex-grow: 1;
+}
+
+.member-progress {
+    color: var(--success-color);
+}
+
+/* Reminders Screen */
+#reminders-list {
+    margin-bottom: 20px;
+}
+
+.reminder-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+    box-shadow: var(--shadow);
+}
+
+.reminder-info h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.reminder-interval {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.reminder-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.reminder-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: var(--accent-color);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(24px);
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: var(--card-background);
+    margin: 10% auto;
+    width: 90%;
+    max-width: 500px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    animation: modalOpen 0.3s ease;
+}
+
+@keyframes modalOpen {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+#sets-container {
+    margin-bottom: 20px;
+}
+
+.set-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius);
+}
+
+.set-form-group {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.set-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.set-form-group input {
+    width: 100%;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color: var(--text-color);
+}
+
+.remove-set {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .container {
+        padding: 30px;
+    }
+    
+    .card {
+        padding: 25px;
+    }
+    
+    .logo h1 {
+        font-size: 28px;
+    }
+    
+    .workout-info h3 {
+        font-size: 20px;
+    }
+    
+    #next-workout-name {
+        font-size: 24px;
+    }
+    
+    .group-name {
+        font-size: 20px;
+    }
+    
+    .reminder-info h3 {
+        font-size: 20px;
+    }
+    
+    .modal-content {
+        width: 80%;
+    }
+}
